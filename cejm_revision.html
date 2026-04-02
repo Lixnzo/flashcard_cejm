@@ -1,0 +1,1439 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CEJM — BTS SIO — Fiches de révision</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600;700;800&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap');
+
+  :root {
+    --bg: #faf9f6;
+    --white: #ffffff;
+    --text: #1a1a2e;
+    --text-mid: #3d3d56;
+    --text-light: #6b6b85;
+    --border: #ddd8d0;
+    --border-light: #eae6df;
+    --accent: #1b3a6b;
+    --accent-light: #eaf0f9;
+    --green: #1a6b47;
+    --green-light: #e9f5ef;
+    --red: #8b1a1a;
+    --red-light: #fceaea;
+    --orange: #9b5e10;
+    --orange-light: #fdf4e6;
+    --purple: #4a2d7a;
+    --purple-light: #f0eaf8;
+    --radius: 6px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Source Sans 3', 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 15px;
+  }
+
+  .container { max-width: 820px; margin: 0 auto; padding: 0 20px 80px; }
+
+  .doc-header {
+    background: var(--white);
+    border-bottom: 3px solid var(--accent);
+    padding: 28px 0 22px;
+    margin-bottom: 0;
+  }
+  .doc-header-inner {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  .doc-header .institution {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-light);
+    font-weight: 600;
+  }
+  .doc-header h1 {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 1.7rem;
+    font-weight: 800;
+    color: var(--accent);
+    margin-top: 6px;
+    letter-spacing: -0.3px;
+  }
+  .doc-header .meta {
+    font-size: 0.82rem;
+    color: var(--text-light);
+    margin-top: 4px;
+  }
+
+  .doc-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 8px 0;
+  }
+  .doc-nav-inner {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+  .doc-nav button {
+    padding: 8px 16px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--white);
+    color: var(--text-mid);
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .doc-nav button:hover { background: var(--accent-light); color: var(--accent); }
+  .doc-nav button.active {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+  }
+
+  .toc {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin: 24px 0;
+  }
+  .toc-title {
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .toc-list { list-style: none; }
+  .toc-list li { margin-bottom: 4px; }
+  .toc-list a {
+    text-decoration: none;
+    color: var(--text-mid);
+    font-size: 0.88rem;
+    font-weight: 500;
+    transition: color 0.15s;
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+  .toc-list a:hover { color: var(--accent); }
+  .toc-list .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-light);
+    min-width: 28px;
+  }
+  .toc-list .part-label {
+    font-weight: 700;
+    color: var(--accent);
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 10px;
+    margin-bottom: 2px;
+  }
+
+  .page { display: none; }
+  .page.active { display: block; animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .part-banner {
+    font-family: 'Source Serif 4', serif;
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--white);
+    padding: 14px 20px;
+    border-radius: var(--radius);
+    margin: 30px 0 20px;
+  }
+  .part-banner.droit { background: var(--accent); }
+  .part-banner.eco { background: var(--green); }
+
+  .fiche {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 24px;
+    overflow: hidden;
+  }
+  .fiche-header {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border-light);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+    transition: background 0.15s;
+  }
+  .fiche-header:hover { background: var(--bg); }
+  .fiche-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-light);
+    margin-right: 10px;
+  }
+  .fiche-title {
+    font-family: 'Source Serif 4', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+    flex: 1;
+  }
+  .fiche-toggle { font-size: 0.8rem; color: var(--text-light); transition: transform 0.2s; }
+  .fiche-header.open .fiche-toggle { transform: rotate(90deg); }
+
+  .fiche-body { padding: 20px 24px; display: none; }
+  .fiche-body.open { display: block; }
+
+  .problematique {
+    font-family: 'Source Serif 4', serif;
+    font-style: italic;
+    color: var(--accent);
+    font-size: 0.95rem;
+    padding: 12px 16px;
+    background: var(--accent-light);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    margin-bottom: 18px;
+  }
+
+  .course h3 {
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text);
+    margin: 20px 0 10px;
+    padding-bottom: 5px;
+    border-bottom: 2px solid var(--border-light);
+  }
+  .course h3:first-child { margin-top: 0; }
+
+  .course p {
+    font-size: 0.9rem;
+    color: var(--text-mid);
+    margin-bottom: 10px;
+  }
+  .course strong { color: var(--text); }
+
+  .course ul { padding-left: 20px; margin-bottom: 12px; }
+  .course li {
+    font-size: 0.88rem;
+    color: var(--text-mid);
+    margin-bottom: 4px;
+  }
+  .course li::marker { color: var(--accent); }
+
+  .dtable { width: 100%; border-collapse: collapse; margin: 12px 0 16px; font-size: 0.86rem; }
+  .dtable th {
+    text-align: left;
+    background: var(--accent);
+    color: white;
+    padding: 8px 12px;
+    font-weight: 600;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .dtable td {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border-light);
+    vertical-align: top;
+  }
+  .dtable td:first-child {
+    font-weight: 700;
+    color: var(--accent);
+    width: 170px;
+    background: var(--accent-light);
+    white-space: nowrap;
+  }
+  .dtable tr:last-child td { border-bottom: none; }
+  .dtable tr:hover td { background: rgba(27,58,107,0.03); }
+  .dtable tr:hover td:first-child { background: rgba(27,58,107,0.08); }
+  .dtable.green th { background: var(--green); }
+  .dtable.green td:first-child { color: var(--green); background: var(--green-light); }
+  .dtable.green tr:hover td:first-child { background: rgba(26,107,71,0.1); }
+
+  .encadre {
+    border-radius: var(--radius);
+    padding: 12px 16px;
+    margin: 14px 0;
+    font-size: 0.86rem;
+    line-height: 1.65;
+  }
+  .encadre.important {
+    background: var(--orange-light);
+    border-left: 3px solid var(--orange);
+    color: var(--orange);
+  }
+  .encadre.retenir {
+    background: var(--green-light);
+    border-left: 3px solid var(--green);
+    color: var(--green);
+  }
+  .encadre.retenir::before { content: "📌 À retenir : "; font-weight: 700; }
+  .encadre.attention {
+    background: var(--red-light);
+    border-left: 3px solid var(--red);
+    color: var(--red);
+  }
+  .encadre.attention::before { content: "⚠️ Attention : "; font-weight: 700; }
+  .encadre.methode {
+    background: var(--purple-light);
+    border-left: 3px solid var(--purple);
+    color: var(--purple);
+  }
+  .encadre.methode::before { content: "📝 Méthode examen : "; font-weight: 700; }
+
+  .schema {
+    background: var(--accent-light);
+    border: 1px dashed var(--border);
+    border-radius: var(--radius);
+    padding: 14px;
+    margin: 12px 0;
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--text);
+    line-height: 2;
+  }
+  .schema .fl { color: var(--accent); font-weight: 700; }
+
+  .article-ref {
+    display: inline-block;
+    background: var(--accent-light);
+    border: 1px solid rgba(27,58,107,0.15);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  /* === FLASHCARDS === */
+  .fc-intro {
+    text-align: center;
+    padding: 20px 0;
+  }
+  .fc-intro h2 {
+    font-family: 'Source Serif 4', serif;
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--accent);
+  }
+  .fc-intro p { color: var(--text-light); font-size: 0.85rem; margin-top: 4px; }
+
+  .cats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  .cpill {
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--white);
+    color: var(--text-light);
+    font-size: 0.73rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .cpill:hover { border-color: var(--accent); color: var(--accent); }
+  .cpill.on { background: var(--accent); border-color: var(--accent); color: white; }
+
+  .fc-stats {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .fc-stat {
+    flex: 1;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 10px;
+    text-align: center;
+  }
+  .fc-stat .v { font-family: 'JetBrains Mono', monospace; font-size: 1.3rem; font-weight: 700; }
+  .fc-stat .lb { font-size: 0.65rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+  .fc-stat.g .v { color: var(--green); }
+  .fc-stat.r .v { color: var(--red); }
+  .fc-stat.b .v { color: var(--accent); }
+
+  .pbar-wrap { margin-bottom: 18px; }
+  .pbar-info { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-light); margin-bottom: 4px; }
+  .pbar-info .ct { font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--accent); }
+  .pbar { height: 4px; background: var(--border-light); border-radius: 10px; overflow: hidden; }
+  .pbar-fill { height: 100%; background: var(--accent); border-radius: 10px; transition: width 0.4s ease; width: 0%; }
+
+  .fc-area { perspective: 1200px; min-height: 280px; margin-bottom: 18px; }
+  .fc {
+    width: 100%;
+    min-height: 280px;
+    position: relative;
+    cursor: pointer;
+    transform-style: preserve-3d;
+    transition: transform 0.45s ease;
+  }
+  .fc.fl { transform: rotateY(180deg); }
+  .face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    border-radius: var(--radius);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 24px;
+    text-align: center;
+  }
+  .face-f {
+    background: var(--white);
+    border: 2px solid var(--border);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  }
+  .face-f .cat-tag {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    font-size: 0.62rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent);
+    background: var(--accent-light);
+    padding: 3px 8px;
+    border-radius: 4px;
+  }
+  .face-f .hint {
+    position: absolute;
+    bottom: 14px;
+    font-size: 0.72rem;
+    color: var(--text-light);
+    opacity: 0.5;
+  }
+  .face-f .trm {
+    font-family: 'Source Serif 4', serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text);
+    max-width: 90%;
+    line-height: 1.4;
+  }
+  .face-b {
+    background: var(--accent-light);
+    border: 2px solid var(--accent);
+    transform: rotateY(180deg);
+  }
+  .face-b .tag {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    font-size: 0.62rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--green);
+    background: var(--green-light);
+    padding: 3px 8px;
+    border-radius: 4px;
+  }
+  .face-b .def {
+    font-size: 0.92rem;
+    line-height: 1.7;
+    max-width: 95%;
+    color: var(--text);
+  }
+
+  .fc-ctrls { display: flex; gap: 8px; justify-content: center; margin-bottom: 12px; }
+  .fc-btn {
+    padding: 10px 20px;
+    border-radius: var(--radius);
+    border: 1.5px solid var(--border);
+    background: var(--white);
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .fc-btn:hover { transform: translateY(-1px); box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .fc-btn.kn { border-color: var(--green); color: var(--green); }
+  .fc-btn.kn:hover { background: var(--green-light); }
+  .fc-btn.dk { border-color: var(--red); color: var(--red); }
+  .fc-btn.dk:hover { background: var(--red-light); }
+  .fc-btn.fp { border-color: var(--accent); color: var(--accent); }
+  .fc-btn.fp:hover { background: var(--accent-light); }
+
+  .fc-nav { display: flex; gap: 6px; justify-content: center; }
+  .fc-nav button {
+    padding: 7px 14px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--white);
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-light);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .fc-nav button:hover { border-color: var(--accent); color: var(--accent); }
+
+  .kb { text-align: center; margin-top: 14px; font-size: 0.68rem; color: var(--text-light); opacity: 0.5; }
+  .kb kbd { background: var(--white); border: 1px solid var(--border); padding: 1px 4px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; }
+
+  .fc-empty { text-align: center; padding: 50px 20px; color: var(--text-light); }
+  .fc-empty .e { font-size: 2.2rem; margin-bottom: 8px; }
+  .fc-empty .m { font-size: 1rem; font-weight: 700; color: var(--green); }
+  .fc-anim { animation: sIn 0.3s ease; }
+  @keyframes sIn { from { opacity: 0; transform: scale(0.97); } to { opacity: 1; transform: scale(1); } }
+
+  /* === QCM === */
+  .qcm-intro { text-align: center; padding: 20px 0; }
+  .qcm-intro h2 { font-family: 'Source Serif 4', serif; font-size: 1.3rem; font-weight: 800; color: var(--purple); }
+  .qcm-intro p { color: var(--text-light); font-size: 0.85rem; margin-top: 4px; }
+
+  .qcm-controls { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
+  .qcm-controls button {
+    padding: 8px 16px; border-radius: var(--radius); border: 1px solid var(--border);
+    background: var(--white); font-family: 'Source Sans 3', sans-serif; font-size: 0.82rem;
+    font-weight: 600; color: var(--text-mid); cursor: pointer; transition: all 0.15s;
+  }
+  .qcm-controls button:hover { border-color: var(--purple); color: var(--purple); }
+  .qcm-controls button.qon { background: var(--purple); color: white; border-color: var(--purple); }
+
+  .qcm-score {
+    background: var(--white); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 14px 20px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;
+  }
+  .qcm-score .qs-label { font-size: 0.85rem; color: var(--text-mid); }
+  .qcm-score .qs-val { font-family: 'JetBrains Mono', monospace; font-size: 1.1rem; font-weight: 700; color: var(--purple); }
+
+  .qcm-card {
+    background: var(--white); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 24px; margin-bottom: 16px; animation: sIn 0.3s ease;
+  }
+  .qcm-card .q-num {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-light);
+    text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;
+  }
+  .qcm-card .q-cat {
+    display: inline-block; font-size: 0.62rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 1px; color: var(--purple); background: var(--purple-light);
+    padding: 3px 8px; border-radius: 4px; margin-bottom: 10px;
+  }
+  .qcm-card .q-text {
+    font-family: 'Source Serif 4', serif; font-size: 1.05rem; font-weight: 700;
+    color: var(--text); margin-bottom: 16px; line-height: 1.5;
+  }
+  .qcm-opt {
+    display: block; width: 100%; text-align: left; padding: 12px 16px; margin-bottom: 8px;
+    border: 1.5px solid var(--border); border-radius: var(--radius); background: var(--white);
+    font-family: 'Source Sans 3', sans-serif; font-size: 0.9rem; color: var(--text-mid);
+    cursor: pointer; transition: all 0.15s; line-height: 1.5;
+  }
+  .qcm-opt:hover:not(.locked) { border-color: var(--purple); color: var(--purple); background: var(--purple-light); }
+  .qcm-opt.correct { border-color: var(--green); background: var(--green-light); color: var(--green); font-weight: 700; }
+  .qcm-opt.wrong { border-color: var(--red); background: var(--red-light); color: var(--red); }
+  .qcm-opt.locked { cursor: default; opacity: 0.7; }
+  .qcm-opt.locked.correct { opacity: 1; }
+  .qcm-expl {
+    margin-top: 12px; padding: 12px 16px; border-radius: var(--radius);
+    background: var(--green-light); border-left: 3px solid var(--green);
+    font-size: 0.85rem; color: var(--green); line-height: 1.6; display: none;
+  }
+  .qcm-expl.show { display: block; animation: sIn 0.3s ease; }
+
+  .qcm-final {
+    text-align: center; padding: 40px 20px; background: var(--white);
+    border: 1px solid var(--border); border-radius: var(--radius);
+  }
+  .qcm-final .e { font-size: 2.5rem; margin-bottom: 10px; }
+  .qcm-final .score-big { font-family: 'JetBrains Mono', monospace; font-size: 2rem; font-weight: 700; }
+  .qcm-final .score-msg { font-size: 0.95rem; color: var(--text-mid); margin-top: 8px; }
+
+  .qcm-next-btn {
+    display: block; margin: 16px auto 0; padding: 10px 24px; border-radius: var(--radius);
+    border: 1.5px solid var(--purple); background: var(--white); color: var(--purple);
+    font-family: 'Source Sans 3', sans-serif; font-size: 0.88rem; font-weight: 700;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .qcm-next-btn:hover { background: var(--purple-light); }
+
+  @media (max-width: 600px) {
+    .doc-header h1 { font-size: 1.3rem; }
+    .dtable td:first-child { width: auto; white-space: normal; }
+    .face-f .trm { font-size: 1.05rem; }
+    .fc-btn { padding: 8px 14px; font-size: 0.78rem; }
+  }
+
+  @media print {
+    .doc-nav { display: none; }
+    .page { display: block !important; }
+    .fiche-body { display: block !important; }
+    .fc-area, .fc-ctrls, .fc-nav, .cats, .kb, .fc-stats, .pbar-wrap { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="doc-header">
+  <div class="doc-header-inner">
+    <div class="institution">BTS SIO — 2e année — CEJM</div>
+    <h1>Culture Économique, Juridique et Managériale</h1>
+    <div class="meta">Fiches de révision — Droit & Économie-Management</div>
+  </div>
+</div>
+
+<div class="doc-nav">
+  <div class="doc-nav-inner">
+    <button class="active" onclick="sw('cours',this)">📘 Cours</button>
+    <button onclick="sw('flash',this)" id="btn-flash">⚡ Flashcards</button>
+    <button onclick="sw('qcm',this)">🎯 QCM</button>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ============================== PAGE COURS ============================== -->
+<div class="page active" id="p-cours">
+
+<div class="toc">
+  <div class="toc-title">Sommaire</div>
+  <ul class="toc-list">
+    <li class="part-label">Partie I — Droit</li>
+    <li><a href="#f1"><span class="num">01</span> Propriété intellectuelle & Numérique</a></li>
+    <li><a href="#f2"><span class="num">02</span> Protection des données personnelles & RGPD</a></li>
+    <li><a href="#f3"><span class="num">03</span> Contrôle de l'activité des salariés</a></li>
+    <li><a href="#f4"><span class="num">04</span> Contrats électroniques & informatiques</a></li>
+    <li><a href="#f5"><span class="num">05</span> Droit du travail & Négociation collective</a></li>
+    <li class="part-label">Partie II — Économie-Management</li>
+    <li><a href="#f6"><span class="num">06</span> L'économie numérique</a></li>
+    <li><a href="#f7"><span class="num">07</span> Management & Système d'information</a></li>
+    <li><a href="#f8"><span class="num">08</span> Le marché du travail</a></li>
+    <li><a href="#f9"><span class="num">09</span> GRH, Motivation & Stratégie d'entreprise</a></li>
+  </ul>
+</div>
+
+<!-- ========================= PARTIE I ========================= -->
+<div class="part-banner droit">Partie I — Droit</div>
+
+<!-- FICHE 1 -->
+<div class="fiche" id="f1">
+  <div class="fiche-header open" onclick="togF(this)">
+    <div><span class="fiche-num">FICHE 01</span> <span class="fiche-title">Propriété intellectuelle & Numérique</span></div>
+    <span class="fiche-toggle">▸</span>
+  </div>
+  <div class="fiche-body open">
+    <div class="course">
+      <div class="problematique">Problématique : Dans quelle mesure le droit répond-il aux questions posées par le développement du numérique ?</div>
+
+      <h3>I. Le nom de domaine</h3>
+      <p>Un <strong>nom de domaine</strong> est l'adresse qui identifie un site web sur Internet (ex : <em>google.fr</em>). Il est composé d'un préfixe (www), d'un sous-domaine, du nom de domaine et de son extension (.fr, .com, .org). L'<strong>URL</strong> (Uniform Resource Locator) désigne l'adresse complète d'une page web.</p>
+      <p>La règle du <strong>« premier arrivé, premier servi »</strong> s'applique : il est impossible d'avoir deux noms de domaine identiques. Pour <strong>protéger</strong> un nom de domaine, deux voies existent : le <strong>déposer comme marque</strong> à l'INPI, ou agir en <strong>concurrence déloyale</strong> (à condition de prouver une faute, un préjudice et un lien de causalité).</p>
+      <div class="encadre attention">La simple réservation d'un nom de domaine ne suffit pas à le protéger — il faut <strong>exploiter le site</strong> effectivement.</div>
+
+      <h3>II. La marque</h3>
+      <p>La <strong>marque</strong> (<em>trademark</em>) est un signe distinctif qui permet d'identifier les produits ou services d'une personne physique ou morale par rapport à ceux de ses concurrents. Le choix d'une marque est libre mais encadré par des conditions juridiques :</p>
+      <table class="dtable">
+        <tr><th colspan="2">Conditions et protection de la marque</th></tr>
+        <tr><td>Conditions</td><td>La marque doit être <strong>distinctive</strong>, <strong>licite</strong>, <strong>disponible</strong> (pas déjà utilisée) et <strong>non contraire à l'ordre public</strong></td></tr>
+        <tr><td>Protection</td><td>Dépôt à l'INPI — durée : <strong>10 ans renouvelable</strong> indéfiniment</td></tr>
+        <tr><td>Contrefaçon</td><td>Toute utilisation non autorisée. Sanctions civiles (dommages-intérêts) et pénales (jusqu'à <strong>3 ans de prison</strong> et <strong>300 000 € d'amende</strong>)</td></tr>
+      </table>
+
+      <h3>III. Les droits d'auteur</h3>
+      <p>Le <strong>droit d'auteur</strong> protège toute <strong>œuvre originale de l'esprit</strong>. La protection est <strong>automatique dès la création</strong> : aucune formalité n'est nécessaire. Toutefois, il est recommandé de pouvoir prouver la date et la paternité de l'œuvre (ex : <strong>enveloppe Soleau</strong> — validité 5 ans renouvelable 1 fois, ou dépôt à l'<strong>APP</strong> — Agence pour la Protection des Programmes).</p>
+
+      <table class="dtable">
+        <tr><th colspan="2">Les deux volets du droit d'auteur</th></tr>
+        <tr><td>Droits moraux</td><td><strong>Divulgation</strong>, <strong>paternité</strong>, <strong>respect de l'œuvre</strong>, <strong>retrait/repentir</strong>. Caractéristiques : <strong>perpétuels, inaliénables, imprescriptibles</strong>.</td></tr>
+        <tr><td>Droits patrimoniaux</td><td><strong>Reproduction</strong> et <strong>représentation</strong>. Cessibles. Durée : <strong>70 ans après la mort de l'auteur</strong>.</td></tr>
+      </table>
+
+      <div class="encadre retenir">Les droits moraux protègent le <strong>lien personnel</strong> auteur-œuvre (on ne peut pas les vendre). Les droits patrimoniaux protègent l'<strong>exploitation économique</strong> (on peut les céder).</div>
+
+      <p><strong>Exceptions aux droits d'auteur :</strong> représentation dans le cercle de famille, copie privée, courte citation (avec nom de l'auteur et source), parodie/pastiche/caricature, accès au contenu d'une base de données.</p>
+
+      <h3>IV. Logiciel, base de données, licence</h3>
+      <p>Le <strong>logiciel</strong> est protégé par le droit d'auteur : code source, interface et documentation. L'arrêt <strong>PACHOT</strong> exige un « effort personnalisé allant au-delà de la simple mise en œuvre automatique ».</p>
+
+      <table class="dtable">
+        <tr><th colspan="2">Types de logiciels et protections associées</th></tr>
+        <tr><td>Logiciel libre</td><td>Liberté d'<strong>exécuter, étudier, distribuer, modifier</strong> le programme</td></tr>
+        <tr><td>Logiciel propriétaire</td><td>Soumis à une <strong>licence restrictive</strong>, accès limité au code source</td></tr>
+        <tr><td>Base de données</td><td>Double protection : <strong>droit d'auteur</strong> (structure originale) + <strong>droit sui generis</strong> du producteur (investissement substantiel, <strong>15 ans renouvelable</strong>)</td></tr>
+        <tr><td>Licence</td><td>Contrat qui concède des <strong>droits d'utilisation</strong> à un ou plusieurs utilisateurs</td></tr>
+        <tr><td>Dessins & modèles</td><td>Dépôt INPI. Durée : <strong>5 ans renouvelable jusqu'à 25 ans</strong>. Doit être nouveau et avoir un caractère propre.</td></tr>
+      </table>
+
+      <div class="encadre attention"><strong>Cas du salarié créateur de logiciel :</strong> les droits patrimoniaux reviennent <strong>automatiquement à l'employeur</strong>. Le salarié conserve les droits moraux mais de manière atténuée (pas de droit de retrait/repentir).</div>
+    </div>
+  </div>
+</div>
+
+<!-- FICHE 2 -->
+<div class="fiche" id="f2">
+  <div class="fiche-header" onclick="togF(this)">
+    <div><span class="fiche-num">FICHE 02</span> <span class="fiche-title">Protection des données personnelles & RGPD</span></div>
+    <span class="fiche-toggle">▸</span>
+  </div>
+  <div class="fiche-body">
+    <div class="course">
+      <div class="problematique">Problématique : Dans quelle mesure le droit répond-il aux questions posées par le développement du numérique ?</div>
+
+      <h3>I. Notions fondamentales</h3>
+      <table class="dtable">
+        <tr><th colspan="2">Définitions clés</th></tr>
+        <tr><td>Identité numérique</td><td>Ensemble des informations laissées sur Internet. 4 composantes : <strong>déclarative</strong> (profils, noms), <strong>calculée</strong> (déduite par les algorithmes), <strong>agie</strong> (likes, achats), <strong>traces techniques</strong> (adresse IP, cookies, géolocalisation).</td></tr>
+        <tr><td>Données personnelles</td><td>Toute information permettant d'identifier directement ou indirectement une personne physique : nom, email, adresse IP, numéro de téléphone…</td></tr>
+        <tr><td>Données sensibles</td><td><span class="article-ref">Art. 9 RGPD</span> Origine ethnique, opinions politiques ou religieuses, santé, orientation sexuelle, données biométriques ou génétiques. <strong>Traitement interdit</strong> sauf exceptions strictes.</td></tr>
+        <tr><td>Traitement de données</td><td>Toute opération sur des données personnelles : <strong>collecte, stockage, consultation, diffusion, suppression</strong>, etc.</td></tr>
+      </table>
+
+      <h3>II. Le cadre juridique : le RGPD</h3>
+      <p>Le <strong>RGPD</strong> (Règlement Général sur la Protection des Données) a été adopté le <strong>27 avril 2016</strong> et est applicable depuis le <strong>25 mai 2018</strong>. Il s'applique à toute organisation (publique ou privée) qui traite des données personnelles de résidents de l'Union européenne, <strong>même si l'organisation est basée hors UE</strong>.</p>
+      <p>Historiquement, la France avait déjà la <strong>Loi Informatique et Libertés du 6 janvier 1978</strong>, créée après le scandale du <strong>projet SAFARI</strong>.</p>
+
+      <table class="dtable">
+        <tr><th colspan="2">Droits des personnes (RGPD)</th></tr>
+        <tr><td>Information</td><td>Savoir quelles données sont collectées et pourquoi</td></tr>
+        <tr><td>Accès</td><td>Obtenir une copie de ses données personnelles</td></tr>
+        <tr><td>Portabilité</td><td>Récupérer ses données dans un format lisible (CSV, JSON)</td></tr>
+        <tr><td>Opposition</td><td>S'opposer au traitement de ses données</td></tr>
+        <tr><td>Effacement</td><td>Demander la suppression (<strong>droit à l'oubli</strong>)</td></tr>
+        <tr><td>Limitation</td><td>Geler temporairement le traitement</td></tr>
+        <tr><td>Déréférencement</td><td>Retrait d'un lien des résultats de moteurs de recherche</td></tr>
+      </table>
+
+      <h3>III. Les principes du RGPD</h3>
+      <table class="dtable">
+        <tr><th colspan="2">Principes fondamentaux</th></tr>
+        <tr><td>Privacy by design</td><td>Intégrer la protection des données <strong>dès la conception</strong> du système</td></tr>
+        <tr><td>Privacy by default</td><td>Niveau de protection maximal activé <strong>par défaut</strong></td></tr>
+        <tr><td>Accountability</td><td>L'entreprise doit pouvoir <strong>démontrer</strong> sa conformité</td></tr>
+        <tr><td>Minimisation</td><td>Collecter uniquement ce qui est <strong>strictement nécessaire</strong></td></tr>
+      </table>
+
+      <p><strong>Dispositifs obligatoires :</strong> le <strong>registre des traitements</strong>, le <strong>DPO</strong> (Délégué à la Protection des Données), et l'<strong>étude d'impact (AIPD)</strong> pour les traitements à risque élevé (<span class="article-ref">Art. 35 RGPD</span>).</p>
+
+      <p>La <strong>CNIL</strong> contrôle l'application du RGPD en France. Pouvoirs : information, contrôle, mise en demeure, sanctions.</p>
+
+      <h3>IV. Sanctions RGPD</h3>
+      <table class="dtable">
+        <tr><th colspan="2">Sanctions en cas de violation</th></tr>
+        <tr><td>Sanctions pécuniaires</td><td>Jusqu'à <strong>20 millions d'euros</strong> ou <strong>4% du CA annuel mondial</strong></td></tr>
+        <tr><td>Sanctions pénales</td><td>Jusqu'à <strong>5 ans d'emprisonnement</strong> + <strong>300 000 € d'amende</strong></td></tr>
+      </table>
+
+      <div class="encadre retenir"><strong>Articles à connaître :</strong> <span class="article-ref">Art. 9 Code civil</span> vie privée — <span class="article-ref">Art. 8 CEDH</span> vie privée et familiale — <span class="article-ref">Art. 226-4-1 C. pénal</span> usurpation d'identité — <span class="article-ref">Art. L1121-1 C. travail</span> proportionnalité.</div>
+    </div>
+  </div>
+</div>
+
+<!-- FICHE 3 -->
+<div class="fiche" id="f3">
+  <div class="fiche-header" onclick="togF(this)">
+    <div><span class="fiche-num">FICHE 03</span> <span class="fiche-title">Contrôle de l'activité des salariés</span></div>
+    <span class="fiche-toggle">▸</span>
+  </div>
+  <div class="fiche-body">
+    <div class="course">
+      <h3>Principe général</h3>
+      <p>L'employeur dispose du <strong>pouvoir de direction</strong> et peut contrôler l'activité de ses salariés. Ce contrôle doit respecter : être <strong>proportionné</strong>, être <strong>justifié</strong>, et le salarié doit être <strong>informé au préalable</strong>.</p>
+
+      <table class="dtable">
+        <tr><th colspan="2">Règles du contrôle des salariés</th></tr>
+        <tr><td>Mails professionnels</td><td>Présumés professionnels → consultables. <strong>Exception :</strong> mention « Personnel » ou « Privé ». <span class="article-ref">Art. 226-15 CP</span></td></tr>
+        <tr><td>Fichiers informatiques</td><td>Consultables librement, même en l'absence du salarié. Sauf fichiers identifiés comme « personnels ».</td></tr>
+        <tr><td>Vidéosurveillance</td><td>Après <strong>consultation du CSE</strong> + information des salariés. Interdiction de surveillance constante.</td></tr>
+        <tr><td>Données biométriques</td><td>Données sensibles <span class="article-ref">Art. 9 RGPD</span>. Pas de détournement de finalité.</td></tr>
+        <tr><td>Géolocalisation</td><td>Usage limité, justifié, le salarié doit être informé. Pas de surveillance permanente.</td></tr>
+      </table>
+
+      <div class="encadre retenir"><strong>Arrêt Nikon (Cass. soc., 2 oct. 2001) :</strong> le salarié a droit au respect de sa vie privée <strong>même pendant le temps de travail</strong>.</div>
+
+      <div class="encadre methode">Pour un cas pratique sur le contrôle des salariés, vérifie toujours : <strong>1)</strong> Le salarié a-t-il été informé ? <strong>2)</strong> Le contrôle est-il proportionné ? <strong>3)</strong> La finalité du dispositif est-elle respectée ?</div>
+    </div>
+  </div>
+</div>
+
+<!-- FICHE 4 -->
+<div class="fiche" id="f4">
+  <div class="fiche-header" onclick="togF(this)">
+    <div><span class="fiche-num">FICHE 04</span> <span class="fiche-title">Contrats électroniques & informatiques</span></div>
+    <span class="fiche-toggle">▸</span>
+  </div>
+  <div class="fiche-body">
+    <div class="course">
+      <h3>I. Le contrat de vente en ligne</h3>
+      <p>Le <strong>contrat</strong> est défini par l'<span class="article-ref">Art. 1101 Code civil</span> comme un accord de volontés entre deux ou plusieurs personnes.</p>
+
+      <table class="dtable">
+        <tr><th colspan="2">Spécificités du contrat en ligne</th></tr>
+        <tr><td>Règle du double clic</td><td><strong>1er clic :</strong> validation du panier. <strong>2e clic :</strong> confirmation définitive après vérification des CGV et du prix total.</td></tr>
+        <tr><td>Délai de rétractation</td><td><strong>14 jours</strong> après réception (<span class="article-ref">Art. L221-18 C. conso</span>). Exceptions : biens personnalisés, périssables. Si non indiqué → 12 mois.</td></tr>
+        <tr><td>Preuve électronique</td><td><span class="article-ref">Art. 1366 CC</span> : même force que le papier. <span class="article-ref">Art. 1367 CC</span> : signature électronique valide.</td></tr>
+        <tr><td>OPTIN</td><td>Obtenir le consentement <strong>avant</strong> l'envoi de publicité électronique. Pas de « oui » = c'est « non ».</td></tr>
+        <tr><td>OPTOUT</td><td>Retirer une adresse d'une liste d'envoi (se désabonner).</td></tr>
+      </table>
+
+      <h3>II. Les contrats informatiques</h3>
+      <table class="dtable">
+        <tr><th colspan="2">Types de maintenance et clauses clés</th></tr>
+        <tr><td>Maintenance préventive</td><td>Actions réalisées <strong>avant</strong> l'apparition d'une panne</td></tr>
+        <tr><td>Maintenance corrective</td><td>Interventions <strong>après</strong> une panne</td></tr>
+        <tr><td>Maintenance évolutive</td><td>Modifications pour adapter le système à de <strong>nouveaux besoins</strong></td></tr>
+        <tr><td>SaaS</td><td><strong>Software as a Service</strong> : logiciel accessible via Internet, fourni par un prestataire cloud</td></tr>
+        <tr><td>Clause de réversibilité</td><td>Récupération des données et outils <strong>en fin de contrat</strong></td></tr>
+        <tr><td>Clause de recette</td><td>Conditions d'<strong>acceptation officielle</strong> du livrable. Recette provisoire (tests partiels) puis recette définitive (livrable complet).</td></tr>
+      </table>
+
+      <div class="encadre retenir"><strong>Forfait vs Régie :</strong> forfait = prix global fixé, obligation de <strong>résultat</strong>. Régie = facturation au temps passé, obligation de <strong>moyens</strong>.</div>
+
+      <p><strong>Obligations précontractuelles du professionnel :</strong> obligation d'information générale, devoir de conseil, mise en garde, renseignement.</p>
+    </div>
+  </div>
+</div>
+
+<!-- FICHE 5 -->
+<div class="fiche" id="f5">
+  <div class="fiche-header" onclick="togF(this)">
+    <div><span class="fiche-num">FICHE 05</span> <span class="fiche-title">Droit du travail & Négociation collective</span></div>
+    <span class="fiche-toggle">▸</span>
+  </div>
+  <div class="fiche-body">
+    <div class="course">
+      <div class="problematique">Problématique : Comment le droit prend-il en considération les besoins des entreprises et des salariés ?</div>
+
+      <h3>I. Le contrat de travail</h3>
+      <p>Trois critères cumulatifs (arrêt <strong>Société Générale</strong>, Cass. soc., 13 nov. 1996) :</p>
+      <div class="schema">
+        <strong>Prestation de travail</strong> <span class="fl">+</span> <strong>Rémunération</strong> <span class="fl">+</span> <strong>Lien de subordination</strong> <span class="fl">=</span> <strong>Contrat de travail</strong>
+      </div>
+      <p>Le <strong>lien de subordination</strong> est le critère déterminant. L'employeur dispose de <strong>3 pouvoirs</strong> : direction, réglementaire, disciplinaire.</p>
+
+      <h3>II. Types de contrats et exécution</h3>
+      <table class="dtable">
+        <tr><th colspan="2">Le contrat de travail en pratique</th></tr>
+        <tr><td>CDI</td><td>Forme <strong>normale</strong> du contrat. Durée indéterminée.</td></tr>
+        <tr><td>CDD</td><td>Cas limités : remplacement, surcroît d'activité, saisonnier, CDD d'usage. Durée max <strong>18 mois</strong>.</td></tr>
+        <tr><td>CTT (intérim)</td><td>Relation <strong>tripartite</strong> : entreprise de travail temporaire → salarié → entreprise utilisatrice.</td></tr>
+        <tr><td>Période d'essai</td><td>Ouvriers/employés : <strong>2 mois</strong>. Techniciens : <strong>3 mois</strong>. Cadres : <strong>4 mois</strong>. Renouvelable 1 fois.</td></tr>
+        <tr><td>Télétravail</td><td>Travail hors des locaux avec les TIC. Le salarié peut refuser. <span class="article-ref">Art. L1222-9</span></td></tr>
+        <tr><td>Droit à la déconnexion</td><td>Ne pas être joignable en dehors des heures de travail. <span class="article-ref">Art. L2242-17</span></td></tr>
+        <tr><td>DUER</td><td>Document Unique d'Évaluation des Risques. <strong>Obligatoire</strong> dès 1 salarié.</td></tr>
+      </table>
+
+      <h3>III. Clauses du contrat de travail</h3>
+      <table class="dtable">
+        <tr><th colspan="2">Clauses importantes</th></tr>
+        <tr><td>Clause de mobilité</td><td>Le salarié accepte la modification de son <strong>lieu de travail</strong></td></tr>
+        <tr><td>Clause de confidentialité</td><td>Garder secrètes les informations de l'entreprise</td></tr>
+        <tr><td>Clause d'exclusivité</td><td>Interdit d'exercer une autre activité pro <strong>pendant</strong> le contrat</td></tr>
+        <tr><td>Clause de non-concurrence</td><td>Limite l'activité chez un concurrent <strong>après</strong> le contrat. Doit être limitée dans le temps/espace + contrepartie financière.</td></tr>
+        <tr><td>Clause de dédit-formation</td><td>Remboursement de la formation si le salarié démissionne avant un délai fixé</td></tr>
+      </table>
+
+      <div class="encadre attention"><strong>Modification vs Changement :</strong> modification du contrat (rémunération, qualification) → accord du salarié obligatoire. Changement des conditions de travail (horaires, lieu dans la même zone) → pouvoir de direction, imposable.</div>
+
+      <h3>IV. Rupture du contrat de travail</h3>
+      <table class="dtable">
+        <tr><th colspan="2">Modes de rupture et licenciement</th></tr>
+        <tr><td>Démission</td><td>Initiative du <strong>salarié</strong></td></tr>
+        <tr><td>Licenciement personnel</td><td>Faute simple (préavis + indemnité), faute grave (pas de préavis ni indemnité), faute lourde (intention de nuire, idem + D-I possibles)</td></tr>
+        <tr><td>Licenciement économique</td><td>Motif non inhérent au salarié (<span class="article-ref">Art. L1233-3</span>). Critères d'ordre, consultation CSE, reclassement. PSE si ≥50 salariés et ≥10 licenciements en 30j.</td></tr>
+        <tr><td>Rupture conventionnelle</td><td>Accord mutuel employeur-salarié</td></tr>
+        <tr><td>Licenciement nul</td><td>Discriminatoire, harcèlement, salarié protégé sans autorisation → <strong>réintégration</strong> ou minimum <strong>6 mois de salaire</strong></td></tr>
+      </table>
+      <div class="encadre retenir"><strong>Tout licenciement</strong> doit reposer sur une <strong>cause réelle et sérieuse</strong>. Étapes : convocation → entretien préalable → notification par lettre.</div>
+
+      <h3>V. La négociation collective</h3>
+      <table class="dtable">
+        <tr><th colspan="2">Représentants des salariés</th></tr>
+        <tr><td>CSE</td><td>Obligatoire dès <strong>11 salariés</strong>. Réclamations, consultation, santé/sécurité.</td></tr>
+        <tr><td>Délégué syndical</td><td>Désignable dès <strong>50 salariés</strong>. Négocie les accords collectifs.</td></tr>
+        <tr><td>Règlement intérieur</td><td>Obligatoire dès <strong>50 salariés</strong>. Hygiène, sécurité, discipline, sanctions. Soumis au CSE.</td></tr>
+        <tr><td>Accord majoritaire</td><td>Signé par syndicats ayant obtenu <strong>≥ 50% des voix</strong> au 1er tour des élections CSE.</td></tr>
+        <tr><td>Principe de faveur</td><td>En cas de conflit entre textes, on applique la règle <strong>la plus favorable au salarié</strong>.</td></tr>
+      </table>
+
+      <p><strong>Grève</strong> (<span class="article-ref">Art. L2511-1</span>) : arrêt collectif, volontaire et temporaire du travail pour revendiquer des droits. Droit constitutionnel.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ========================= PARTIE II ========================= -->
+<div class="part-banner eco">Partie II — Économie-Management</div>
+
+<!-- FICHE 6 -->
+<div class="fiche" id="f6">
+  <div class="fiche-header" onclick="togF(this)">
+    <div><span class="fiche-num">FICHE 06</span> <span class="fiche-title">L'économie numérique</span></div>
+    <span class="fiche-toggle">▸</span>
+  </div>
+  <div class="fiche-body">
+    <div class="course">
+      <div class="problematique">Problématique : Comment le numérique transforme-t-il l'environnement des entreprises ?</div>
+
+      <h3>I. Acteurs et types d'échanges</h3>
+      <table class="dtable green">
+        <tr><th colspan="2">Acteurs et échanges commerciaux</th></tr>
+        <tr><td>B to B</td><td>Business to Business — commerce entre entreprises</td></tr>
+        <tr><td>B to C</td><td>Business to Consumer — entreprise vers consommateur</td></tr>
+        <tr><td>C to C</td><td>Consumer to Consumer — échanges entre particuliers</td></tr>
+        <tr><td>B to G</td><td>Business to Government — entreprise vers administration</td></tr>
+        <tr><td>Professionnel</td><td>Personne spécialisée exerçant une activité professionnelle</td></tr>
+        <tr><td>Consommateur</td><td>Personne physique qui achète/utilise un produit ou service</td></tr>
+        <tr><td>Non professionnel</td><td>Personne morale qui n'agit pas dans un but professionnel</td></tr>
+        <tr><td>Marketplace</td><td>Plateforme de rencontre entre vendeurs et clients. Avantages : visibilité, accès large, comparaison des prix.</td></tr>
+      </table>
+
+      <h3>II. Phénomènes économiques du numérique</h3>
+      <table class="dtable green">
+        <tr><th colspan="2">Concepts clés</th></tr>
+        <tr><td>Externalité de réseau</td><td>La valeur d'un bien/service <strong>augmente avec le nombre d'utilisateurs</strong></td></tr>
+        <tr><td>Désintermédiation</td><td>Suppression des intermédiaires. Inverse : <strong>réintermédiation</strong></td></tr>
+        <tr><td>Éco. de l'usage</td><td>Utiliser au lieu de posséder (location, partage)</td></tr>
+        <tr><td>Éco. collaborative</td><td>Particuliers partagent/échangent entre eux (Airbnb, covoiturage)</td></tr>
+        <tr><td>Dématérialisation</td><td>Physique → digital. + accessibilité/traçabilité. − cyberattaques, coût formation.</td></tr>
+        <tr><td>Ubérisation</td><td>Mise en relation directe clients-prestataires via plateformes, <strong>remettant en cause les structures traditionnelles</strong>. Enjeux : concurrence déloyale, précarité, absence de protection sociale.</td></tr>
+      </table>
+
+      <h3>III. Nouveaux acteurs et modèles économiques</h3>
+      <table class="dtable green">
+        <tr><th colspan="2">Modèles d'entreprise</th></tr>
+        <tr><td>Pure player</td><td>Vente uniquement en ligne (ex : Amazon)</td></tr>
+        <tr><td>Bricks and Mortar</td><td>Uniquement des points de vente physiques</td></tr>
+        <tr><td>Clicks and Mortar</td><td>Magasin physique + activité en ligne (hybride)</td></tr>
+        <tr><td>Startup</td><td>Jeune entreprise innovante dans les nouvelles technologies</td></tr>
+        <tr><td>Yield management</td><td>Prix variables selon la demande (aérien, hôtellerie)</td></tr>
+        <tr><td>Freemium</td><td>Version gratuite de base + version premium payante</td></tr>
+        <tr><td>Free to play</td><td>Jeu gratuit avec certaines options payantes</td></tr>
+      </table>
+      <div class="encadre retenir"><strong>Schumpeter — Destruction créatrice :</strong> la croissance est un processus permanent de création, de destruction et de restructuration des activités économiques par l'innovation.</div>
+    </div>
+  </div>
+</div>
+
+<!-- FICHE 7 -->
+<div class="fiche" id="f7">
+  <div class="fiche-header" onclick="togF(this)">
+    <div><span class="fiche-num">FICHE 07</span> <span class="fiche-title">Management & Système d'information</span></div>
+    <span class="fiche-toggle">▸</span>
+  </div>
+  <div class="fiche-body">
+    <div class="course">
+      <div class="problematique">Problématique : Quelle est l'incidence du numérique sur le management des entreprises ?</div>
+
+      <h3>I. SI, Big Data et IA</h3>
+      <table class="dtable green">
+        <tr><th colspan="2">Définitions</th></tr>
+        <tr><td>Système d'information</td><td>Ensemble organisé de ressources pour <strong>collecter, stocker, traiter et diffuser</strong> l'information. 3 dimensions : <strong>technique</strong> (matériel, logiciel), <strong>humaine</strong> (utilisateurs), <strong>organisationnelle</strong> (procédures).</td></tr>
+        <tr><td>PGI / ERP</td><td>Progiciel de Gestion Intégré : SI qui gère l'ensemble des informations et services opérationnels d'une entreprise.</td></tr>
+        <tr><td>Big Data</td><td>Masses énormes de données. <strong>3V : Volume, Vélocité, Variété</strong>.</td></tr>
+        <tr><td>IA</td><td>Systèmes capables de simuler des processus cognitifs humains.</td></tr>
+        <tr><td>Norme vs Standard</td><td><strong>Norme</strong> : fixée par un organisme habilité. <strong>Standard</strong> : décidé par les acteurs du secteur eux-mêmes.</td></tr>
+      </table>
+
+      <h3>II. Mintzberg — Les 6 mécanismes de coordination</h3>
+      <table class="dtable green">
+        <tr><th colspan="2">Comment coordonne-t-on le travail ?</th></tr>
+        <tr><td>Ajustement mutuel</td><td>Communication informelle et directe entre collègues</td></tr>
+        <tr><td>Supervision directe</td><td>Un supérieur donne des ordres et contrôle</td></tr>
+        <tr><td>Std. des procédés</td><td>Les méthodes de travail sont prédéfinies</td></tr>
+        <tr><td>Std. des résultats</td><td>Les objectifs sont définis à l'avance</td></tr>
+        <tr><td>Std. des qualifications</td><td>La formation et compétences sont spécifiées</td></tr>
+        <tr><td>Std. des normes</td><td>Valeurs et culture partagées guident les comportements</td></tr>
+      </table>
+
+      <h3>III. La courbe de Greiner</h3>
+      <div class="schema">
+        Créativité <span class="fl">→</span> <em>crise de leadership</em> <span class="fl">→</span> Direction <span class="fl">→</span> <em>crise d'autonomie</em> <span class="fl">→</span> Délégation <span class="fl">→</span> <em>crise de contrôle</em> <span class="fl">→</span> Coordination <span class="fl">→</span> <em>crise de bureaucratie</em> <span class="fl">→</span> Collaboration
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FICHE 8 -->
+<div class="fiche" id="f8">
+  <div class="fiche-header" onclick="togF(this)">
+    <div><span class="fiche-num">FICHE 08</span> <span class="fiche-title">Le marché du travail</span></div>
+    <span class="fiche-toggle">▸</span>
+  </div>
+  <div class="fiche-body">
+    <div class="course">
+      <div class="problematique">Problématique : Quelles sont les principales évolutions du marché du travail ?</div>
+
+      <h3>I. Fonctionnement du marché du travail</h3>
+      <p>Le <strong>marché du travail</strong> est le point de rencontre entre l'<strong>offre</strong> (individus proposant leur travail) et la <strong>demande</strong> (entreprises qui recrutent). Offre > demande → <strong>chômage</strong>. Demande > offre → <strong>marché en tension</strong>.</p>
+
+      <h3>II. La segmentation (dualisme)</h3>
+      <table class="dtable green">
+        <tr><th colspan="2">Structure du marché du travail</th></tr>
+        <tr><td>Marché primaire</td><td>Emplois <strong>stables</strong> : CDI, bonnes conditions, perspectives de carrière</td></tr>
+        <tr><td>Marché secondaire</td><td>Emplois <strong>précaires</strong> : CDD, intérim, temps partiel</td></tr>
+        <tr><td>Marché interne</td><td>Mobilité au sein de l'entreprise (promotion, mutation)</td></tr>
+        <tr><td>Marché externe</td><td>Recrutement hors de l'entreprise (CDD, CTT)</td></tr>
+        <tr><td>Insider</td><td>Salarié en CDI, stable, protégé</td></tr>
+        <tr><td>Outsider</td><td>Travailleur précaire/chômeur, peu qualifié</td></tr>
+        <tr><td>Plein emploi</td><td>Toutes les ressources de main-d'œuvre sont utilisées</td></tr>
+        <tr><td>Sous-emploi</td><td>Personne non pleinement occupée (temps partiel subi)</td></tr>
+        <tr><td>Combinaison productive</td><td>Association travail + capital + technologie pour produire</td></tr>
+      </table>
+
+      <h3>III. Politiques de l'emploi</h3>
+      <table class="dtable green">
+        <tr><th colspan="2">Deux types d'intervention publique</th></tr>
+        <tr><td>Politique active</td><td><strong>Accroître</strong> l'emploi : formation, aide à l'embauche, adéquation offre/demande</td></tr>
+        <tr><td>Politique passive</td><td><strong>Atténuer</strong> le chômage : allocations, préretraites, partage du temps de travail</td></tr>
+      </table>
+
+      <div class="encadre retenir"><strong>Marché IT :</strong> marché en tension (cybersécurité, cloud, data), mais difficultés d'insertion pour les profils juniors. Décalage entre les attentes des employeurs (expérience) et les profils débutants.</div>
+    </div>
+  </div>
+</div>
+
+<!-- FICHE 9 -->
+<div class="fiche" id="f9">
+  <div class="fiche-header" onclick="togF(this)">
+    <div><span class="fiche-num">FICHE 09</span> <span class="fiche-title">GRH, Motivation & Stratégie d'entreprise</span></div>
+    <span class="fiche-toggle">▸</span>
+  </div>
+  <div class="fiche-body">
+    <div class="course">
+      <div class="problematique">Problématiques : Quel est l'impact des mutations du travail sur l'emploi ? Comment le diagnostic éclaire-t-il les choix stratégiques ?</div>
+
+      <h3>I. GRH et motivation</h3>
+      <table class="dtable green">
+        <tr><th colspan="2">Gestion des ressources humaines</th></tr>
+        <tr><td>GPEC</td><td><strong>Anticiper</strong> les besoins futurs en effectifs et compétences</td></tr>
+        <tr><td>GEPP</td><td>Évolution de la GPEC, plus axée sur les <strong>parcours individuels</strong></td></tr>
+        <tr><td>Gestion des talents</td><td>Identifier, attirer, développer et retenir les employés à fort potentiel</td></tr>
+        <tr><td>Marque employeur</td><td>Image positive de l'entreprise pour <strong>attirer</strong> et <strong>fidéliser</strong> les talents</td></tr>
+      </table>
+
+      <p><strong>Pyramide de Maslow</strong> — 5 niveaux :</p>
+      <div class="schema">
+        5. <strong>Accomplissement</strong> (réalisation de soi)<br>
+        4. <strong>Estime</strong> (reconnaissance, confiance)<br>
+        3. <strong>Appartenance</strong> (relations sociales)<br>
+        2. <strong>Sécurité</strong> (emploi, santé, stabilité)<br>
+        1. <strong>Physiologiques</strong> (manger, dormir)
+      </div>
+
+      <table class="dtable green">
+        <tr><th colspan="2">Théories de la motivation</th></tr>
+        <tr><td>Herzberg (bi-factorielle)</td><td><strong>Facteurs de motivation</strong> (reconnaissance, responsabilité) → motivent. <strong>Facteurs d'hygiène</strong> (salaire, conditions) → évitent l'insatisfaction. Les deux sont <strong>indépendants</strong>.</td></tr>
+        <tr><td>Adams (théorie de l'équité)</td><td>On compare ce qu'on apporte à l'entreprise avec ce qu'on reçoit en retour. Sentiment d'<strong>équité ou d'iniquité</strong>.</td></tr>
+      </table>
+
+      <p><strong>Générations au travail :</strong> Baby-boomers (1945-64), Génération X (1965-80), Y (1981-96), Z (1997-2012). Chaque génération a des attentes professionnelles différentes.</p>
+
+      <h3>II. Diagnostic stratégique</h3>
+      <table class="dtable green">
+        <tr><th colspan="2">Outils d'analyse stratégique</th></tr>
+        <tr><td>LCAG</td><td>Diagnostic interne (forces/faiblesses) + externe (opportunités/menaces)</td></tr>
+        <tr><td>SWOT</td><td><strong>S</strong>trengths, <strong>W</strong>eaknesses, <strong>O</strong>pportunities, <strong>T</strong>hreats</td></tr>
+        <tr><td>PESTEL</td><td><strong>P</strong>olitique, <strong>É</strong>conomique, <strong>S</strong>ocioculturel, <strong>T</strong>echnologique, <strong>É</strong>cologique, <strong>L</strong>égal</td></tr>
+        <tr><td>Chaîne de valeur</td><td>Porter : décomposer les activités pour identifier celles qui créent le plus de valeur</td></tr>
+      </table>
+
+      <h3>III. Les théories de la décision</h3>
+      <table class="dtable green">
+        <tr><th colspan="2">Niveaux de décision (Ansoff)</th></tr>
+        <tr><td>Stratégiques</td><td>Long terme, engagent l'avenir, difficilement réversibles</td></tr>
+        <tr><td>Tactiques</td><td>Moyen terme, mettent en œuvre la stratégie</td></tr>
+        <tr><td>Opérationnelles</td><td>Court terme, gestion quotidienne</td></tr>
+      </table>
+
+      <table class="dtable green">
+        <tr><th colspan="2">Auteurs et théories</th></tr>
+        <tr><td>Herbert Simon</td><td><strong>Rationalité limitée :</strong> solution <strong>satisfaisante</strong>, pas optimale</td></tr>
+        <tr><td>Cyert & March</td><td>Entreprise = <strong>coalition de groupes</strong>. Décisions = <strong>compromis</strong></td></tr>
+        <tr><td>Crozier & Friedberg</td><td><strong>Zones d'incertitude</strong> = source de pouvoir</td></tr>
+      </table>
+
+      <div class="encadre methode">En éco-management, <strong>cite toujours les auteurs</strong> (Mintzberg, Maslow, Herzberg, Porter, Schumpeter, Simon, Ansoff, Crozier, Adams…).</div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /p-cours -->
+
+<!-- ============================== PAGE FLASHCARDS ============================== -->
+<div class="page" id="p-flash">
+
+<div class="fc-intro">
+  <h2 id="fc-title">Flashcards</h2>
+  <p>Clique pour retourner · Trie entre « je savais » et « à revoir »</p>
+</div>
+
+<div class="cats" id="cats"></div>
+
+<div class="pbar-wrap">
+  <div class="pbar-info"><span id="pl">Carte 0 / 0</span><span class="ct" id="rl">0 restantes</span></div>
+  <div class="pbar"><div class="pbar-fill" id="pf"></div></div>
+</div>
+
+<div class="fc-stats">
+  <div class="fc-stat g"><div class="v" id="vk">0</div><div class="lb">Je savais ✓</div></div>
+  <div class="fc-stat r"><div class="v" id="vd">0</div><div class="lb">À revoir ✗</div></div>
+  <div class="fc-stat b"><div class="v" id="vt">0</div><div class="lb">Total</div></div>
+</div>
+
+<div class="fc-area" id="ca"></div>
+
+<div class="fc-ctrls" id="fc">
+  <button class="fc-btn dk" onclick="mk(0)">✗ À revoir</button>
+  <button class="fc-btn fp" onclick="fl()">↻ Retourner</button>
+  <button class="fc-btn kn" onclick="mk(1)">✓ Je savais</button>
+</div>
+
+<div class="fc-nav">
+  <button onclick="pv()">← Préc.</button>
+  <button onclick="sh()">🔀 Mélanger</button>
+  <button onclick="nx()">Suiv. →</button>
+  <button onclick="rs()">🔄 Reset</button>
+</div>
+
+<div class="kb"><kbd>Espace</kbd> retourner · <kbd>→</kbd> suivante · <kbd>←</kbd> précédente · <kbd>1</kbd> à revoir · <kbd>2</kbd> je savais</div>
+
+</div><!-- /p-flash -->
+
+<!-- ============================== PAGE QCM ============================== -->
+<div class="page" id="p-qcm">
+
+<div class="qcm-intro">
+  <h2>QCM — Teste tes connaissances</h2>
+  <p>Choisis une catégorie puis réponds aux questions</p>
+</div>
+
+<div class="qcm-controls" id="qcm-cats"></div>
+
+<div class="qcm-score">
+  <span class="qs-label">Score : <strong id="qcm-sc">0</strong> / <strong id="qcm-tot">0</strong></span>
+  <span class="qs-val" id="qcm-pct">—</span>
+</div>
+
+<div id="qcm-area"></div>
+
+<div style="text-align:center;margin-top:16px;">
+  <button class="fc-btn fp" onclick="qcmReset()" style="border-color:var(--purple);color:var(--purple);">🔄 Nouveau QCM</button>
+</div>
+
+</div><!-- /p-qcm -->
+
+</div><!-- /container -->
+
+<script>
+// ===== NAV =====
+function sw(p,btn){
+  document.querySelectorAll('.page').forEach(e=>e.classList.remove('active'));
+  document.getElementById('p-'+p).classList.add('active');
+  document.querySelectorAll('.doc-nav button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  window.scrollTo({top:0});
+}
+
+function togF(el){
+  el.classList.toggle('open');
+  el.nextElementSibling.classList.toggle('open');
+}
+
+// ===== FLASHCARD DATA =====
+const D=[
+// --- Propriété intellectuelle ---
+{c:"Propriété intellectuelle",t:"Nom de domaine",d:"Adresse identifiant un site. Composé de préfixe, sous-domaine, nom, extension. Règle « premier arrivé, premier servi »."},
+{c:"Propriété intellectuelle",t:"Marque (trademark)",d:"Signe distinctif. Conditions : distinctive, licite, disponible. Protection : 10 ans renouvelable (INPI)."},
+{c:"Propriété intellectuelle",t:"Contrefaçon",d:"Utilisation non autorisée d'une marque/œuvre. Sanctions civiles (D-I) ET pénales (3 ans prison + 300 000 €)."},
+{c:"Propriété intellectuelle",t:"Droits d'auteur",d:"Droits exclusifs sur une œuvre originale. Protection automatique dès la création. Droits moraux + patrimoniaux."},
+{c:"Propriété intellectuelle",t:"Droits moraux (4)",d:"Divulgation, paternité, respect de l'œuvre, retrait. Perpétuels, inaliénables, imprescriptibles."},
+{c:"Propriété intellectuelle",t:"Droits patrimoniaux",d:"Reproduction + représentation. Cessibles. 70 ans après la mort de l'auteur."},
+{c:"Propriété intellectuelle",t:"Logiciel — protection",d:"Droit d'auteur : code source, interface, documentation. Arrêt PACHOT : effort individualisé."},
+{c:"Propriété intellectuelle",t:"Salarié créateur de logiciel",d:"Patrimoniaux → employeur. Moraux → salarié (atténués : pas de retrait/repentir)."},
+{c:"Propriété intellectuelle",t:"Base de données",d:"Droit d'auteur (structure) + droit sui generis du producteur (15 ans renouvelable)."},
+{c:"Propriété intellectuelle",t:"Licence",d:"Contrat concédant des droits d'utilisation. Libre vs propriétaire."},
+{c:"Propriété intellectuelle",t:"Exceptions aux droits d'auteur",d:"Cercle de famille, copie privée, courte citation, parodie/pastiche/caricature, accès BDD."},
+{c:"Propriété intellectuelle",t:"Enveloppe Soleau",d:"Preuve de l'existence d'une œuvre à une date précise. Validité : 5 ans, renouvelable 1 fois."},
+{c:"Propriété intellectuelle",t:"Dessins et modèles",d:"Dépôt INPI. 5 ans renouvelable jusqu'à 25 ans. Doit être nouveau + caractère propre."},
+// --- RGPD ---
+{c:"RGPD & Données",t:"Identité numérique (4 facettes)",d:"Déclarative (profils), calculée (algorithmes), agie (likes), traces techniques (IP, cookies)."},
+{c:"RGPD & Données",t:"Données personnelles",d:"Toute info identifiant une personne physique : nom, email, adresse IP…"},
+{c:"RGPD & Données",t:"Données sensibles (art. 9 RGPD)",d:"Origine ethnique, opinions, santé, orientation sexuelle, biométrie. Traitement interdit sauf exceptions."},
+{c:"RGPD & Données",t:"Traitement de données",d:"Toute opération sur des données personnelles : collecte, stockage, consultation, diffusion, suppression."},
+{c:"RGPD & Données",t:"RGPD — dates",d:"Adopté 27/04/2016. Applicable 25/05/2018. Toute organisation traitant données résidents UE."},
+{c:"RGPD & Données",t:"CNIL",d:"Autorité indépendante : informe, contrôle, sanctionne. Amendes jusqu'à 4% CA mondial ou 20M€."},
+{c:"RGPD & Données",t:"Loi Informatique et Libertés",d:"6 janvier 1978 (suite projet SAFARI). Précurseur du RGPD."},
+{c:"RGPD & Données",t:"7 droits des personnes",d:"Information, accès, portabilité, opposition, effacement, limitation, déréférencement."},
+{c:"RGPD & Données",t:"Privacy by design",d:"Protection intégrée DÈS LA CONCEPTION du système."},
+{c:"RGPD & Données",t:"Privacy by default",d:"Protection maximale activée PAR DÉFAUT."},
+{c:"RGPD & Données",t:"Accountability",d:"L'entreprise doit DÉMONTRER sa conformité au RGPD."},
+{c:"RGPD & Données",t:"Minimisation",d:"Collecter uniquement le strictement nécessaire à la finalité."},
+{c:"RGPD & Données",t:"DPO / DPD",d:"Délégué à la Protection des Données. Garant de la conformité RGPD."},
+{c:"RGPD & Données",t:"Étude d'impact (AIPD)",d:"Analyse risques pour les droits des personnes. Art. 35 RGPD. Traitements à risque élevé."},
+{c:"RGPD & Données",t:"Sanctions RGPD",d:"Pécuniaires : jusqu'à 20M€ ou 4% CA mondial. Pénales : 5 ans + 300 000€."},
+// --- Articles juridiques ---
+{c:"Articles juridiques",t:"Art. 9 Code civil",d:"Droit au respect de la vie privée."},
+{c:"Articles juridiques",t:"Art. 8 CEDH",d:"Droit au respect de la vie privée et familiale."},
+{c:"Articles juridiques",t:"Art. 226-4-1 Code pénal",d:"Usurpation d'identité."},
+{c:"Articles juridiques",t:"Art. L1121-1 C. travail",d:"Restrictions aux droits des salariés : justifiées et proportionnées."},
+{c:"Articles juridiques",t:"Art. L1224-1 C. travail",d:"Transfert automatique des contrats en cas de changement d'employeur."},
+// --- Contrôle salariés ---
+{c:"Contrôle salariés",t:"Mails professionnels",d:"Présumés pro → consultables. SAUF mention « Personnel ». Art. 226-15 CP."},
+{c:"Contrôle salariés",t:"Fichiers informatiques",d:"Consultables librement même en absence. Sauf identifiés personnels."},
+{c:"Contrôle salariés",t:"Vidéosurveillance",d:"Après consultation CSE + info salariés. Pas de surveillance constante."},
+{c:"Contrôle salariés",t:"Arrêt Nikon (2001)",d:"Vie privée du salarié respectée MÊME pendant le temps de travail."},
+{c:"Contrôle salariés",t:"Biométrie au travail",d:"Données sensibles art. 9 RGPD. Détournement de finalité interdit."},
+{c:"Contrôle salariés",t:"Géolocalisation des salariés",d:"Usage limité, justifié, salarié informé. Pas de surveillance permanente."},
+// --- Contrats ---
+{c:"Contrats",t:"Contrat (art. 1101 CC)",d:"Accord de volontés créant, modifiant ou éteignant des obligations."},
+{c:"Contrats",t:"Règle du double clic",d:"1er clic : validation panier. 2e clic : confirmation après vérification CGV. Protège le consentement."},
+{c:"Contrats",t:"Délai de rétractation",d:"14 jours après réception. Exceptions : biens personnalisés, périssables. Non indiqué → 12 mois."},
+{c:"Contrats",t:"Preuve électronique",d:"Art. 1366 : même force que papier. Art. 1367 : signature électronique valide."},
+{c:"Contrats",t:"OPTIN / OPTOUT",d:"OPTIN : consentement AVANT la pub (pas de oui = non). OPTOUT : se désabonner d'une liste."},
+{c:"Contrats",t:"3 types de maintenance",d:"Préventive (AVANT panne), corrective (APRÈS), évolutive (nouveaux besoins)."},
+{c:"Contrats",t:"SaaS",d:"Software as a Service : logiciel accessible via Internet, fourni par un prestataire cloud."},
+{c:"Contrats",t:"Clause de réversibilité",d:"Récupération des données en fin de contrat."},
+{c:"Contrats",t:"Clause de recette",d:"Acceptation officielle du livrable. Recette provisoire (tests) puis définitive (complet)."},
+{c:"Contrats",t:"Forfait vs Régie",d:"Forfait : prix fixe, obligation de RÉSULTAT. Régie : temps passé, obligation de MOYENS."},
+// --- Droit du travail ---
+{c:"Droit du travail",t:"3 critères contrat de travail",d:"Prestation + rémunération + subordination. Arrêt Société Générale 1996."},
+{c:"Droit du travail",t:"CDI vs CDD",d:"CDI : forme normale. CDD : cas limités, durée max 18 mois."},
+{c:"Droit du travail",t:"CTT (intérim)",d:"Relation tripartite : entreprise de travail temporaire → salarié → entreprise utilisatrice."},
+{c:"Droit du travail",t:"3 pouvoirs de l'employeur",d:"Direction (organiser), réglementaire (règlement intérieur), disciplinaire (sanctionner)."},
+{c:"Droit du travail",t:"Période d'essai",d:"Ouvriers : 2 mois, techniciens : 3 mois, cadres : 4 mois. Renouvelable 1 fois."},
+{c:"Droit du travail",t:"Télétravail",d:"Travail hors locaux avec les TIC. Le salarié peut refuser. Art. L1222-9."},
+{c:"Droit du travail",t:"Droit à la déconnexion",d:"Ne pas être joignable hors heures de travail. Art. L2242-17."},
+{c:"Droit du travail",t:"DUER",d:"Document Unique d'Évaluation des Risques. OBLIGATOIRE dès 1 salarié."},
+{c:"Droit du travail",t:"Modification vs Changement",d:"Modification (rémunération, qualification) → accord salarié. Changement (conditions) → pouvoir de direction."},
+{c:"Droit du travail",t:"Clause de non-concurrence",d:"Limite l'activité chez un concurrent APRÈS le contrat. Limitée temps/espace + contrepartie financière."},
+{c:"Droit du travail",t:"Clause de dédit-formation",d:"Remboursement formation si démission avant un délai fixé. Montant dégressif."},
+{c:"Droit du travail",t:"3 types de fautes",d:"Simple (préavis + indemnité), grave (ni préavis ni indemnité), lourde (intention de nuire)."},
+{c:"Droit du travail",t:"Licenciement économique",d:"Motif non inhérent au salarié. Art. L1233-3. Critères d'ordre, CSE, reclassement, PSE."},
+{c:"Droit du travail",t:"Licenciement nul",d:"Discriminatoire, harcèlement, salarié protégé. Réintégration ou min. 6 mois de salaire."},
+{c:"Droit du travail",t:"Rupture conventionnelle",d:"Accord mutuel employeur-salarié. Collective : départs volontaires négociés avec représentants."},
+{c:"Droit du travail",t:"Grève",d:"Arrêt collectif, volontaire, temporaire. Revendications pro. Droit constitutionnel. Art. L2511-1."},
+{c:"Droit du travail",t:"Salarié vs indépendant",d:"Salarié : subordination. Indépendant : PAS de subordination, gère librement."},
+{c:"Droit du travail",t:"Négociation collective",d:"Dialogue représentants salariés / employeur → accords/conventions collectives."},
+{c:"Droit du travail",t:"CSE",d:"Obligatoire dès 11 salariés. Réclamations, consultation, santé/sécurité."},
+{c:"Droit du travail",t:"Délégué syndical",d:"Désignable dès 50 salariés. Négocie accords. Représentatif si ≥ 10% voix."},
+{c:"Droit du travail",t:"Règlement intérieur",d:"Obligatoire dès 50 salariés. Hygiène, sécurité, discipline. Soumis au CSE."},
+{c:"Droit du travail",t:"Accord majoritaire",d:"Signé par syndicats ayant ≥ 50% des voix au 1er tour CSE. S'applique à tous."},
+{c:"Droit du travail",t:"Principe de faveur",d:"Conflit entre textes → appliquer la règle la plus favorable au salarié."},
+// --- Économie numérique ---
+{c:"Économie numérique",t:"TIC",d:"Technologies de l'Info et Communication. Saisir, transmettre, afficher des données."},
+{c:"Économie numérique",t:"B2B / B2C / C2C / B2G",d:"B2B : entre entreprises. B2C : → conso. C2C : entre particuliers. B2G : → admin."},
+{c:"Économie numérique",t:"Externalité de réseau",d:"La valeur AUGMENTE avec le nombre d'utilisateurs."},
+{c:"Économie numérique",t:"Désintermédiation",d:"Suppression des intermédiaires. Inverse : réintermédiation."},
+{c:"Économie numérique",t:"Éco de l'usage vs collaborative",d:"Usage : utiliser sans posséder. Collaborative : partage entre particuliers. ≠ propriété."},
+{c:"Économie numérique",t:"Dématérialisation",d:"Physique → digital. + accessibilité/traçabilité. − cyberattaques, coût formation."},
+{c:"Économie numérique",t:"Ubérisation",d:"Mise en relation directe clients-prestataires via plateformes. Remet en cause les structures traditionnelles."},
+{c:"Économie numérique",t:"Pure player / B&M / C&M",d:"Pure player : 100% en ligne. B&M : physique. C&M : hybride."},
+{c:"Économie numérique",t:"Yield management",d:"Prix variables selon la demande. Aérien, hôtellerie."},
+{c:"Économie numérique",t:"Freemium / Free to play",d:"Freemium : gratuit + premium payant. F2P : jeu gratuit, options payantes."},
+{c:"Économie numérique",t:"Destruction créatrice (Schumpeter)",d:"Création/destruction d'activités par l'innovation. Processus permanent."},
+// --- Management & SI ---
+{c:"Management & SI",t:"Système d'information",d:"Ressources organisées : collecter, stocker, traiter, diffuser l'info. 3 dimensions : technique, humaine, organisationnelle."},
+{c:"Management & SI",t:"PGI / ERP",d:"Progiciel de Gestion Intégré. Gère l'ensemble des infos et services opérationnels."},
+{c:"Management & SI",t:"Big Data",d:"3V : Volume, Vélocité, Variété."},
+{c:"Management & SI",t:"Norme vs Standard",d:"Norme : fixée par organisme habilité. Standard : décidé par les acteurs du secteur."},
+{c:"Management & SI",t:"Mintzberg — 6 mécanismes",d:"Ajustement mutuel, supervision directe, std. procédés/résultats/qualifications/normes."},
+{c:"Management & SI",t:"Courbe de Greiner",d:"5 phases de croissance terminées par des crises. Créativité → … → Collaboration."},
+// --- Marché du travail ---
+{c:"Marché du travail",t:"Offre vs demande",d:"Offre : individu propose travail. Demande : entreprise recrute."},
+{c:"Marché du travail",t:"Primaire vs secondaire",d:"Primaire : stable (CDI). Secondaire : précaire (CDD, intérim). Dualisme."},
+{c:"Marché du travail",t:"Insider vs Outsider",d:"Insider : CDI, stable. Outsider : précaire/chômeur."},
+{c:"Marché du travail",t:"Marché en tension",d:"Entreprises peinent à recruter. Manque de candidats qualifiés."},
+{c:"Marché du travail",t:"Politique active vs passive",d:"Active : accroître emploi, formation. Passive : allocations, préretraites."},
+{c:"Marché du travail",t:"Combinaison productive",d:"Association travail + capital + technologie pour produire."},
+// --- GRH & Stratégie ---
+{c:"GRH & Stratégie",t:"GPEC vs GEPP",d:"GPEC : anticiper besoins effectifs. GEPP : + axée parcours individuels."},
+{c:"GRH & Stratégie",t:"Pyramide de Maslow",d:"Physiologiques → Sécurité → Appartenance → Estime → Accomplissement."},
+{c:"GRH & Stratégie",t:"Herzberg",d:"Motivation (reconnaissance, responsabilité) vs hygiène (salaire, conditions). Indépendants l'un de l'autre."},
+{c:"GRH & Stratégie",t:"Adams — Théorie de l'équité",d:"On compare apports (travail, compétences) aux bénéfices (salaire, reconnaissance). Sentiment d'équité ou d'iniquité."},
+{c:"GRH & Stratégie",t:"Marque employeur",d:"Image positive de l'entreprise pour attirer et fidéliser les talents."},
+{c:"GRH & Stratégie",t:"Générations X, Y, Z",d:"X : 1965-80. Y : 1981-96. Z : 1997-2012. Attentes pro différentes selon la génération."},
+{c:"GRH & Stratégie",t:"SWOT",d:"Strengths, Weaknesses, Opportunities, Threats. Diagnostic stratégique."},
+{c:"GRH & Stratégie",t:"PESTEL",d:"Politique, Économique, Socioculturel, Technologique, Écologique, Légal."},
+{c:"GRH & Stratégie",t:"Chaîne de valeur (Porter)",d:"Décomposer activités → identifier celles qui créent le plus de valeur."},
+{c:"GRH & Stratégie",t:"3 décisions (Ansoff)",d:"Stratégiques (long terme), tactiques (moyen terme), opérationnelles (court terme)."},
+{c:"GRH & Stratégie",t:"Rationalité limitée (Simon)",d:"Info incomplète + capacités limitées → solution SATISFAISANTE, pas optimale."},
+{c:"GRH & Stratégie",t:"Cyert & March",d:"Entreprise = coalition d'intérêts divergents. Décisions = compromis."},
+{c:"GRH & Stratégie",t:"Crozier & Friedberg",d:"Acteurs utilisent ZONES D'INCERTITUDE comme source de pouvoir."},
+];
+
+// ===== QCM DATA =====
+const QCM=[
+// Propriété intellectuelle
+{c:"Propriété intellectuelle",q:"Quelle est la durée de protection d'une marque déposée à l'INPI ?",opts:["5 ans renouvelable","10 ans renouvelable","70 ans","25 ans"],ans:1,expl:"La marque est protégée 10 ans renouvelable indéfiniment par dépôt à l'INPI."},
+{c:"Propriété intellectuelle",q:"Les droits moraux de l'auteur sont…",opts:["Cessibles et limités dans le temps","Perpétuels, inaliénables, imprescriptibles","Valables 70 ans après la mort","Vendables à un tiers"],ans:1,expl:"Les droits moraux sont perpétuels, inaliénables et imprescriptibles — ils ne peuvent pas être vendus."},
+{c:"Propriété intellectuelle",q:"Qui détient les droits patrimoniaux sur un logiciel créé par un salarié ?",opts:["Le salarié","L'employeur","Les deux à parts égales","L'INPI"],ans:1,expl:"Les droits patrimoniaux reviennent automatiquement à l'employeur. Le salarié conserve les droits moraux (atténués)."},
+{c:"Propriété intellectuelle",q:"Quelle est la durée du droit sui generis du producteur de base de données ?",opts:["10 ans","15 ans renouvelable","25 ans","70 ans"],ans:1,expl:"Le droit sui generis protège le producteur pendant 15 ans, renouvelable à chaque nouvel investissement substantiel."},
+{c:"Propriété intellectuelle",q:"L'enveloppe Soleau a une validité de…",opts:["1 an","5 ans renouvelable 1 fois","10 ans","Illimitée"],ans:1,expl:"L'enveloppe Soleau est valable 5 ans et renouvelable une seule fois."},
+{c:"Propriété intellectuelle",q:"Les sanctions pénales pour contrefaçon peuvent aller jusqu'à…",opts:["1 an de prison et 50 000 €","3 ans de prison et 300 000 €","5 ans de prison et 500 000 €","10 ans de prison"],ans:1,expl:"La contrefaçon est punie de sanctions pénales pouvant aller jusqu'à 3 ans de prison et 300 000 € d'amende."},
+// RGPD
+{c:"RGPD & Données",q:"Depuis quelle date le RGPD est-il applicable ?",opts:["6 janvier 1978","27 avril 2016","25 mai 2018","1er janvier 2020"],ans:2,expl:"Le RGPD a été adopté le 27/04/2016 mais n'est applicable que depuis le 25/05/2018."},
+{c:"RGPD & Données",q:"Quel principe impose de ne collecter que les données strictement nécessaires ?",opts:["Privacy by design","Accountability","Minimisation","Privacy by default"],ans:2,expl:"Le principe de minimisation impose de ne collecter que ce qui est strictement nécessaire à la finalité du traitement."},
+{c:"RGPD & Données",q:"Que signifie « Privacy by default » ?",opts:["Protéger les données dès la conception","Protection maximale activée par défaut","L'entreprise doit démontrer sa conformité","Collecter le strict nécessaire"],ans:1,expl:"Privacy by default signifie que le niveau de protection le plus élevé est activé par défaut, sans intervention de l'utilisateur."},
+{c:"RGPD & Données",q:"L'amende maximale du RGPD peut atteindre…",opts:["1% du CA mondial","4% du CA mondial ou 20 M€","10 M€","50 000 €"],ans:1,expl:"Les sanctions pécuniaires peuvent aller jusqu'à 20 millions d'euros ou 4% du chiffre d'affaires annuel mondial."},
+{c:"RGPD & Données",q:"Combien de droits le RGPD accorde-t-il aux personnes sur leurs données ?",opts:["4","5","7","10"],ans:2,expl:"Les 7 droits : information, accès, portabilité, opposition, effacement, limitation, déréférencement."},
+{c:"RGPD & Données",q:"Quel événement a conduit à la Loi Informatique et Libertés de 1978 ?",opts:["Le scandale Cambridge Analytica","Le projet SAFARI","La directive européenne de 1995","La création de la CNIL"],ans:1,expl:"Le projet SAFARI était un projet gouvernemental de centralisation des données, révélé par la presse et abandonné suite à l'émotion publique."},
+// Contrôle salariés
+{c:"Contrôle salariés",q:"D'après l'arrêt Nikon (2001), le salarié a droit au respect de sa vie privée…",opts:["Uniquement en dehors du travail","Même pendant le temps de travail","Seulement si c'est écrit dans le contrat","Uniquement pour les cadres"],ans:1,expl:"L'arrêt Nikon affirme que le salarié a droit au respect de sa vie privée même sur son lieu de travail et pendant le temps de travail."},
+{c:"Contrôle salariés",q:"Un employeur peut consulter les mails d'un salarié sauf si…",opts:["Le salarié est absent","Le mail est marqué « Personnel »","Le mail date de plus de 6 mois","L'employeur n'a pas de motif"],ans:1,expl:"Les mails professionnels sont consultables, mais ceux identifiés comme « Personnel » ou « Privé » sont protégés."},
+// Contrats
+{c:"Contrats",q:"À quoi sert la règle du double clic ?",opts:["Accélérer la commande","Protéger le consentement du consommateur","Valider le paiement","Confirmer l'identité"],ans:1,expl:"Le double clic protège le consentement : 1er clic = validation du panier, 2e clic = confirmation après vérification."},
+{c:"Contrats",q:"Quel est le délai de rétractation pour un achat en ligne ?",opts:["7 jours","14 jours","30 jours","60 jours"],ans:1,expl:"Le délai de rétractation est de 14 jours après réception du produit (Art. L221-18 Code de la consommation)."},
+{c:"Contrats",q:"Un contrat au forfait implique une obligation de…",opts:["Moyens","Résultat","Conseil","Transparence"],ans:1,expl:"Le contrat au forfait est un prix global fixé à l'avance avec une obligation de résultat. Le contrat en régie est en obligation de moyens."},
+{c:"Contrats",q:"Que signifie OPTIN ?",opts:["Se désabonner d'une liste","Obtenir le consentement avant l'envoi de pub","Accepter automatiquement les cookies","Refuser les CGV"],ans:1,expl:"OPTIN signifie qu'il faut obtenir le consentement du destinataire AVANT l'envoi de publicité électronique."},
+// Droit du travail
+{c:"Droit du travail",q:"Quel critère distingue principalement le salarié du travailleur indépendant ?",opts:["La rémunération","Le lien de subordination","Le type de contrat","Le lieu de travail"],ans:1,expl:"Le lien de subordination (pouvoir de donner des ordres, contrôler, sanctionner) est le critère déterminant du contrat de travail."},
+{c:"Droit du travail",q:"Le CSE est obligatoire à partir de combien de salariés ?",opts:["1 salarié","11 salariés","20 salariés","50 salariés"],ans:1,expl:"Le CSE (Comité Social et Économique) est obligatoire dans toute entreprise de 11 salariés et plus."},
+{c:"Droit du travail",q:"La période d'essai d'un cadre en CDI est de…",opts:["2 mois","3 mois","4 mois","6 mois"],ans:2,expl:"Ouvriers/employés : 2 mois, techniciens : 3 mois, cadres : 4 mois. Renouvelable 1 fois."},
+{c:"Droit du travail",q:"Un licenciement pour faute grave entraîne…",opts:["Préavis + indemnité","Ni préavis ni indemnité de licenciement","Uniquement le préavis","Réintégration obligatoire"],ans:1,expl:"La faute grave rend impossible le maintien du salarié : pas de préavis ni d'indemnité de licenciement."},
+{c:"Droit du travail",q:"Le règlement intérieur est obligatoire dès…",opts:["11 salariés","20 salariés","50 salariés","100 salariés"],ans:2,expl:"Le règlement intérieur est obligatoire dans les entreprises d'au moins 50 salariés."},
+{c:"Droit du travail",q:"Un accord majoritaire nécessite au moins…",opts:["30% des voix","50% des voix","66% des voix","L'unanimité"],ans:1,expl:"Un accord majoritaire doit être signé par des syndicats représentant au moins 50% des voix au 1er tour des élections CSE."},
+{c:"Droit du travail",q:"Quelle clause limite l'activité chez un concurrent APRÈS le contrat ?",opts:["Clause de mobilité","Clause d'exclusivité","Clause de non-concurrence","Clause de confidentialité"],ans:2,expl:"La clause de non-concurrence limite le salarié APRÈS la rupture. Elle doit être limitée dans le temps/espace avec une contrepartie financière."},
+// Économie numérique
+{c:"Économie numérique",q:"Qu'est-ce qu'un pure player ?",opts:["Entreprise uniquement physique","Entreprise vendant uniquement en ligne","Entreprise hybride","Startup technologique"],ans:1,expl:"Un pure player est un commerçant proposant et vendant ses produits uniquement en ligne (ex : Amazon à ses débuts)."},
+{c:"Économie numérique",q:"La destruction créatrice est un concept de…",opts:["Porter","Maslow","Schumpeter","Mintzberg"],ans:2,expl:"Schumpeter décrit la croissance comme un processus permanent de création, destruction et restructuration par l'innovation."},
+{c:"Économie numérique",q:"L'ubérisation désigne…",opts:["L'automatisation des usines","La mise en relation directe clients-prestataires via plateformes","La fusion de deux entreprises","Le passage au tout numérique"],ans:1,expl:"L'ubérisation remet en cause les structures traditionnelles en mettant directement en relation clients et prestataires via des plateformes numériques."},
+// Management & SI
+{c:"Management & SI",q:"Les 3V du Big Data sont…",opts:["Valeur, Vision, Vérité","Volume, Vélocité, Variété","Validation, Vérification, Virtualisation","Vitesse, Volume, Validité"],ans:1,expl:"Le Big Data se caractérise par les 3V : Volume (quantité), Vélocité (vitesse), Variété (formats multiples)."},
+{c:"Management & SI",q:"Quel mécanisme de Mintzberg repose sur la communication informelle ?",opts:["Supervision directe","Standardisation des procédés","Ajustement mutuel","Standardisation des normes"],ans:2,expl:"L'ajustement mutuel est la coordination par communication informelle et directe entre collègues."},
+{c:"Management & SI",q:"Combien de phases comporte la courbe de Greiner ?",opts:["3","4","5","6"],ans:2,expl:"La courbe de Greiner comprend 5 phases de croissance, chacune terminée par une crise."},
+// GRH & Stratégie
+{c:"GRH & Stratégie",q:"Dans la pyramide de Maslow, quel besoin est au sommet ?",opts:["Sécurité","Estime","Accomplissement","Appartenance"],ans:2,expl:"La pyramide de Maslow place l'accomplissement (réalisation de soi) au sommet des 5 niveaux de besoins."},
+{c:"GRH & Stratégie",q:"Selon Herzberg, le salaire est un facteur…",opts:["De motivation","D'hygiène","D'accomplissement","De leadership"],ans:1,expl:"Le salaire est un facteur d'hygiène : il évite l'insatisfaction mais ne motive pas en lui-même."},
+{c:"GRH & Stratégie",q:"Que signifie le « S » dans SWOT ?",opts:["Strategy","Strengths","Systems","Sustainability"],ans:1,expl:"SWOT = Strengths (forces), Weaknesses (faiblesses), Opportunities (opportunités), Threats (menaces)."},
+{c:"GRH & Stratégie",q:"Herbert Simon parle de rationalité…",opts:["Absolue","Parfaite","Limitée","Collective"],ans:2,expl:"Simon explique que le décideur a une rationalité limitée (info incomplète, capacités cognitives limitées) et choisit une solution satisfaisante."},
+{c:"GRH & Stratégie",q:"La théorie de l'équité est associée à…",opts:["Maslow","Herzberg","Adams","Porter"],ans:2,expl:"John Stacy Adams décrit la théorie de l'équité : on compare nos apports à l'entreprise avec les bénéfices reçus."},
+{c:"GRH & Stratégie",q:"La Génération Y correspond aux personnes nées entre…",opts:["1945 et 1964","1965 et 1980","1981 et 1996","1997 et 2012"],ans:2,expl:"Génération Y : 1981-1996. Baby-boomers : 1945-64, Gen X : 1965-80, Gen Z : 1997-2012."},
+];
+
+// ===== FLASHCARD ENGINE =====
+let dk=[],ci=0,fp=false,kn=0,dn=0,ac="Toutes",as=new Set();
+function gc(){return["Toutes",...new Set(D.map(c=>c.c))];}
+function rc(){
+  document.getElementById('cats').innerHTML=gc().map(c=>`<div class="cpill ${c===ac?'on':''}" onclick="sc('${c.replace(/'/g,"\\'")}')">${c}</div>`).join('');
+  document.getElementById('fc-title').textContent=`Flashcards — ${D.length} cartes`;
+  document.getElementById('btn-flash').textContent=`⚡ Flashcards (${D.length})`;
+}
+function sc(c){ac=c;rs();rc();}
+function bd(){dk=ac==="Toutes"?[...D]:D.filter(c=>c.c===ac);}
+function sh(){for(let i=dk.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[dk[i],dk[j]]=[dk[j],dk[i]];}ci=0;fp=false;as.clear();kn=0;dn=0;rr();uu();}
+function rs(){bd();sh();}
+function rr(){
+  const a=document.getElementById('ca'),ctrl=document.getElementById('fc');
+  if(!dk.length){a.innerHTML=`<div class="fc-empty"><div class="e">📭</div><div>Aucune carte</div></div>`;ctrl.style.display='none';return;}
+  if(ci>=dk.length){const p=dk.length?Math.round(kn/dk.length*100):0;a.innerHTML=`<div class="fc-empty"><div class="e">🏆</div><div class="m">Paquet terminé !</div><div style="color:var(--text-light);font-size:.88rem;margin-top:6px">${kn}/${dk.length} maîtrisées (${p}%)</div><div style="margin-top:8px;color:var(--text-light);font-size:.8rem">Clique 🔄 Reset</div></div>`;ctrl.style.display='none';return;}
+  ctrl.style.display='flex';const c=dk[ci];fp=false;
+  a.innerHTML=`<div class="fc fc-anim" id="ff" onclick="fl()"><div class="face face-f"><div class="cat-tag">${c.c}</div><div class="trm">${c.t}</div><div class="hint">Clique pour retourner</div></div><div class="face face-b"><div class="tag">Définition</div><div class="def">${c.d}</div></div></div>`;
+}
+function uu(){
+  const t=dk.length,s=as.size;
+  document.getElementById('pl').textContent=`Carte ${Math.min(ci+1,t)} / ${t}`;
+  document.getElementById('rl').textContent=`${Math.max(t-s,0)} restantes`;
+  document.getElementById('pf').style.width=t?`${s/t*100}%`:'0%';
+  document.getElementById('vk').textContent=kn;
+  document.getElementById('vd').textContent=dn;
+  document.getElementById('vt').textContent=t;
+}
+function fl(){const e=document.getElementById('ff');if(!e)return;fp=!fp;e.classList.toggle('fl',fp);}
+function mk(k){if(ci>=dk.length)return;as.add(ci);if(k)kn++;else dn++;ci++;rr();uu();}
+function nx(){if(ci<dk.length-1){ci++;rr();uu();}}
+function pv(){if(ci>0){ci--;rr();uu();}}
+document.addEventListener('keydown',e=>{
+  const active=document.getElementById('p-flash').classList.contains('active');
+  if(!active)return;
+  if(e.key===' '||e.key==='ArrowUp'||e.key==='ArrowDown'){e.preventDefault();fl();}
+  if(e.key==='ArrowRight')nx();if(e.key==='ArrowLeft')pv();
+  if(e.key==='1')mk(0);if(e.key==='2')mk(1);
+});
+
+// ===== QCM ENGINE =====
+let qList=[],qIdx=0,qScore=0,qCat="Toutes";
+function qcmCats(){return["Toutes",...new Set(QCM.map(q=>q.c))];}
+function renderQcmCats(){
+  document.getElementById('qcm-cats').innerHTML=qcmCats().map(c=>`<button class="${c===qCat?'qon':''}" onclick="setQCat('${c.replace(/'/g,"\\'")}')">${c}</button>`).join('');
+}
+function setQCat(c){qCat=c;qcmReset();renderQcmCats();}
+function qcmReset(){
+  const pool=qCat==="Toutes"?[...QCM]:QCM.filter(q=>q.c===qCat);
+  for(let i=pool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]];}
+  qList=pool.slice(0,Math.min(15,pool.length));
+  qIdx=0;qScore=0;
+  renderQcm();
+}
+function renderQcm(){
+  const area=document.getElementById('qcm-area');
+  document.getElementById('qcm-sc').textContent=qScore;
+  document.getElementById('qcm-tot').textContent=qList.length;
+  document.getElementById('qcm-pct').textContent=qList.length?'—':'—';
+  area.innerHTML='';
+  if(!qList.length){area.innerHTML='<div class="fc-empty"><div class="e">📭</div><div>Aucune question disponible</div></div>';return;}
+  if(qIdx>=qList.length){
+    const pct=Math.round(qScore/qList.length*100);
+    let emoji='🏆',msg='Excellent !';
+    if(pct<50){emoji='📚';msg='Continue à réviser !';}
+    else if(pct<80){emoji='👍';msg='Bien, mais tu peux mieux faire !';}
+    document.getElementById('qcm-pct').textContent=pct+'%';
+    area.innerHTML=`<div class="qcm-final"><div class="e">${emoji}</div><div class="score-big">${qScore} / ${qList.length}</div><div class="score-msg">${msg} (${pct}%)</div></div>`;
+    return;
+  }
+  const q=qList[qIdx];
+  let html=`<div class="qcm-card"><div class="q-num">Question ${qIdx+1} / ${qList.length}</div><div class="q-cat">${q.c}</div><div class="q-text">${q.q}</div>`;
+  q.opts.forEach((o,i)=>{
+    html+=`<button class="qcm-opt" onclick="qcmAnswer(this,${i},${q.ans})">${o}</button>`;
+  });
+  html+=`<div class="qcm-expl" id="qexpl">${q.expl}</div>`;
+  html+=`<button class="qcm-next-btn" id="qnext" style="display:none" onclick="qIdx++;renderQcm();">Question suivante →</button>`;
+  html+=`</div>`;
+  area.innerHTML=html;
+}
+function qcmAnswer(el,chosen,correct){
+  if(el.classList.contains('locked'))return;
+  const card=el.closest('.qcm-card');
+  const opts=card.querySelectorAll('.qcm-opt');
+  opts.forEach((o,i)=>{
+    o.classList.add('locked');
+    if(i===correct)o.classList.add('correct');
+  });
+  if(chosen!==correct)el.classList.add('wrong');
+  else qScore++;
+  document.getElementById('qcm-sc').textContent=qScore;
+  document.getElementById('qexpl').classList.add('show');
+  document.getElementById('qnext').style.display='block';
+}
+
+// ===== INIT =====
+rc();rs();renderQcmCats();qcmReset();
+</script>
+</body>
+</html>
